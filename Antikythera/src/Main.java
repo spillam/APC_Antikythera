@@ -10,7 +10,7 @@ public class Main {
 
     public static void SQLMode() {
         // connection string
-        var url = "jdbc:sqlite:Data/assignment3.db";
+        var url = "jdbc:sqlite:Antikythera/Data/assignment3.db";
         Scanner scanner = new Scanner(System.in);
 
         // TO-DO: User Interface
