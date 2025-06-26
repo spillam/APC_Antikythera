@@ -14,6 +14,9 @@ public class SqlSerializer {
                 student.GetEmail() + ");";
     }
 
+    */
+
+    /*
     public static Student StudentFromSql(ResultSet rs)
     {
         try {
@@ -31,4 +34,46 @@ public class SqlSerializer {
             return null;
         }
     }*/
+
+    public static LunarEclipse LunarEclipseFromSql(ResultSet rs) {
+        try {
+            int year = rs.getInt("Year");
+            int month = rs.getInt("Month");
+            int day = rs.getInt("Day");
+            int hours = rs.getInt("Hours");
+            int minutes = rs.getInt("Minutes");
+            int seconds = rs.getInt("Seconds");
+            int saros = rs.getInt("Saros");
+            float magnitude = rs.getFloat("Magnitude");
+            int centralDuration = rs.getInt("CentralD");
+            String type = rs.getString("Type");
+            String visibility = rs.getString("Visibility");
+
+            return new LunarEclipse(year, month, day, hours, minutes, seconds, saros, magnitude, centralDuration, type, visibility);
+        } catch (SQLException e) {
+            System.out.println("Error parsing Lunar Eclipse object. " + e);
+            return null;
+        }
+    }
+
+    public static SolarEclipse SolarEclipseFromSql(ResultSet rs) {
+        try {
+            int year = rs.getInt("Year");
+            int month = rs.getInt("Month");
+            int day = rs.getInt("Day");
+            int hours = rs.getInt("Hours");
+            int minutes = rs.getInt("Minutes");
+            int seconds = rs.getInt("Seconds");
+            int saros = rs.getInt("Saros");
+            float magnitude = rs.getFloat("Magnitude");
+            int centralDuration = rs.getInt("CentralD");
+            String type = rs.getString("Type");
+            String visibility = rs.getString("Visibility");
+
+            return new SolarEclipse(year, month, day, hours, minutes, seconds, saros, magnitude, centralDuration, type, visibility);
+        } catch (SQLException e) {
+            System.out.println("Error parsing Solar Eclipse object. " + e);
+            return null;
+        }
+    }
 }
