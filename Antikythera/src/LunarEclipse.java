@@ -17,4 +17,8 @@ public class LunarEclipse {
         visibility = in_visibility;
     }
 
+    public void printAll()
+    {
+        System.out.println("Lunar Eclipse:\nDate: " + year + "/" + month + "/" + day + " " + hours + ":" + minutes + ":" + seconds + ", Saros: " + saros + ", Magnitude: " + magnitude + " Duration: " + centralDuration + "s, Type: " + type + ", Visibility: " + visibility);
+    }
 }
