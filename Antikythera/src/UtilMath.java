@@ -16,27 +16,15 @@ public class UtilMath {
     //tan = Math.tan(double a)
 
     //Trig. functions in degrees
-    public static double sind(double x) { // degrees sin
-        return Math.sin(x/radeg);
-    }
-    public static double cosd(double x) { // degrees cos
-        return Math.cos(x/radeg);
-    }
+    public static double sind(double x) { return Math.sin(x/radeg); }
+    public static double cosd(double x) { return Math.cos(x/radeg); }
     public static double tand(double x) { //degrees tan
         return Math.tan(x/radeg);
     }
-
-    public static double asind(double x) { //degrees arcsin
-        return radeg*Math.asin(x);
-    }
-
-    public static double acosd(double x) {
-        return 90 - Math.acos(x);
-    }
-
-    public static double atand(double x) {
-        return radeg*Math.atan(x);
-    }
+    //Trig. arc functions in degrees
+    public static double asind(double x) { return radeg*Math.asin(x); }
+    public static double acosd(double x) { return 90 - Math.acos(x); }
+    public static double atand(double x) { return radeg*Math.atan(x); }
 
     //arctan in all four quadrants
     public static double atan2(double x, double y) {
@@ -52,6 +40,11 @@ public class UtilMath {
         return radeg*(Math.atan(y/x)) - (180 - (Math.PI*x));
     }
 
+    //Normalize an angle between 0 and 360 degrees
+    public static double fnrev(double x) {
+        return x - (((int)(x/360))*360);
+    }
 
+    //Cube Root = Math.cbrt(double x)
 
 }
