@@ -48,8 +48,8 @@ public class SqlSerializer {
             int centralDuration = rs.getInt("CentralD");
             String type = rs.getString("Type");
             String visibility = rs.getString("Visibility");
-
-            return new LunarEclipse(year, month, day, hours, minutes, seconds, saros, magnitude, centralDuration, type, visibility);
+            UniversalTime time = new UniversalTime(year, month, day, hours, minutes, seconds);
+            return new LunarEclipse(time, saros, magnitude, centralDuration, type, visibility);
         } catch (SQLException e) {
             System.out.println("Error parsing Lunar Eclipse object. " + e);
             return null;
@@ -69,8 +69,9 @@ public class SqlSerializer {
             int centralDuration = rs.getInt("CentralD");
             String type = rs.getString("Type");
             String visibility = rs.getString("Visibility");
-
-            return new SolarEclipse(year, month, day, hours, minutes, seconds, saros, magnitude, centralDuration, type, visibility);
+            System.out.println("Year: " + year);
+            UniversalTime time = new UniversalTime(year, month, day, hours, minutes, seconds);
+            return new SolarEclipse(time, saros, magnitude, centralDuration, type, visibility);
         } catch (SQLException e) {
             System.out.println("Error parsing Solar Eclipse object. " + e);
             return null;

@@ -1,6 +1,13 @@
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -8,11 +15,19 @@ public class Main {
 
     public static void SQLMode() {
         // connection string
-        var url = "jdbc:sqlite:Antikythera/Data/assignment3.db";
+        var url = "jdbc:sqlite:Antikythera/Data/antikythera.db";
         Scanner scanner = new Scanner(System.in);
+        SqlExecutor.OpenDatabase(url);
+
+        ZonedDateTime zdt = ZonedDateTime.now(ZoneId.of("US/Eastern"));
+        System.out.println("Current time EST is: " + zdt.format(DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss Z")));
+        UniversalTime ut = new UniversalTime(zdt);
+        System.out.println("Current time GMT is: " + ut);
+        ut.addDays(31);
+        System.out.println("Current time GMT is: " + ut);
 
         // TO-DO: User Interface
-        System.out.println("Welcome to The Antikythera Replication Project");
+        /*System.out.println("Welcome to The Antikythera Replication Project");
 
         int userSelectionMain = -1;
 
@@ -186,6 +201,8 @@ public class Main {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }*/
+
+        SqlExecutor.CloseDatabase();
     }
 
     public static void main(String[] args) {

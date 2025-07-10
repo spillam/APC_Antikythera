@@ -1,16 +1,13 @@
 public class SolarEclipse {
-    public int year, month, day, hours, minutes, seconds, saros, centralDuration;
+    public int saros, centralDuration;
     public float magnitude;
     public String type, visibility;
 
-    public SolarEclipse(int in_year, int in_month, int in_day, int in_hours, int in_minutes, int in_seconds, int in_saros, float in_magnitude, int in_centralDuration, String in_type, String in_visibility)
+    public UniversalTime time;
+
+    public SolarEclipse(UniversalTime in_time, int in_saros, float in_magnitude, int in_centralDuration, String in_type, String in_visibility)
     {
-        year = in_year;
-        month = in_month;
-        day = in_day;
-        hours = in_hours;
-        minutes = in_minutes;
-        seconds = in_seconds;
+        time = in_time;
         saros = in_saros;
         magnitude = in_magnitude;
         centralDuration = in_centralDuration;
@@ -18,8 +15,38 @@ public class SolarEclipse {
         visibility = in_visibility;
     }
 
+    public int getYear()
+    {
+        return time.getYear();
+    }
+
+    public int getMonth()
+    {
+        return time.getMonth();
+    }
+
+    public int getDays()
+    {
+        return time.getDays();
+    }
+
+    public int getHours()
+    {
+        return time.getHours();
+    }
+
+    public int getMinutes()
+    {
+        return time.getMinutes();
+    }
+
+    public int getSeconds()
+    {
+        return time.getSeconds();
+    }
+
     public void printAll()
     {
-        System.out.println("Solar Eclipse:\nDate: " + year + "/" + month + "/" + day + " " + hours + ":" + minutes + ":" + seconds + ", Saros: " + saros + ", Magnitude: " + magnitude + " Duration: " + centralDuration + "s, Type: " + type + ", Visibility: " + visibility);
+        System.out.println("Solar Eclipse:\nDate: " + getYear() + "/" + getMonth() + "/" + getDays() + " " + getHours() + ":" + getMinutes() + ":" + getSeconds() + ", Saros: " + saros + ", Magnitude: " + magnitude + " Duration: " + centralDuration + "s, Type: " + type + ", Visibility: " + visibility);
     }
 }
