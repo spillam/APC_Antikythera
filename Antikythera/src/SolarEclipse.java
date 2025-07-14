@@ -45,6 +45,14 @@ public class SolarEclipse {
         return time.getSeconds();
     }
 
+    public String getVisibility(){
+        return visibility;
+    }
+
+    public String getType(){
+        return type;
+    }
+
     public void printAll()
     {
         System.out.println("Solar Eclipse:\nDate: " + getYear() + "/" + getMonth() + "/" + getDays() + " " + getHours() + ":" + getMinutes() + ":" + getSeconds() + ", Saros: " + saros + ", Magnitude: " + magnitude + " Duration: " + centralDuration + "s, Type: " + type + ", Visibility: " + visibility);
