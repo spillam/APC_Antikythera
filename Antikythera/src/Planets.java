@@ -159,13 +159,21 @@ public class Planets
         r = Math.sqrt(x*x + y*y);
         v = Math.atan2(y,x);
 
-        //longitude = v + w; on April 19 1990
+        longitude = v + perihelion; //on April 19 1990
         // lon = 105.9134_deg + 282.7735_deg = 388.6869_deg = 28.6869_deg
         //      Our results    Astron. Almanac      Difference
 
         //lon    28.6869_deg      28.6813_deg        +0.0056_deg = 20"
         //r       1.004323         1.004311          +0.000012
-
+        System.out.println(node);
+        System.out.println(inclination);
+        System.out.println(perihelion);
+        System.out.println(SMaxis);
+        System.out.println(eccentricity);
+        System.out.println(r);
+        System.out.println(v);
+        System.out.println(longitude);
+        System.out.println(latitude);
 
     }
 
@@ -215,5 +223,20 @@ public class Planets
         //long = 308.3616_deg
         //lat  =  -0.3937_deg
         //r    =  60.6713
+
+        System.out.println(node);
+        System.out.println(inclination);
+        System.out.println(perihelion);
+        System.out.println(SMaxis);
+        System.out.println(eccentricity);
+        System.out.println(E0);
+        System.out.println(E1);
+        System.out.println(r);
+        System.out.println(v);
+        System.out.println(xeclip);
+        System.out.println(yeclip);
+        System.out.println(zeclip);
+        System.out.println(longitude);
+        System.out.println(latitude);
     }
 }
