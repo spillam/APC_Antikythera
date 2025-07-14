@@ -11,7 +11,7 @@ public class EclipseFinder {
     static double SarosCycleLeftoverSeconds = 27743.04;
     static double ThreeSarosCycleLeftoverSeconds = SarosCycleLeftoverSeconds * 3;
 
-    public List<SolarEclipse> GetEclipses()
+    public List<SolarEclipse> GetSolarEclipses()
     {
         List<SolarEclipse> solarEclipses = new ArrayList<>();
 
@@ -28,14 +28,69 @@ public class EclipseFinder {
             System.out.println(e);
         }
 
-        solarEclipses.sort(Comparator.comparing(SolarEclipse::getYear)
-                .thenComparing(SolarEclipse::getMonth)
-                .thenComparing(SolarEclipse::getDays)
-                .thenComparing(SolarEclipse::getHours)
-                .thenComparing(SolarEclipse::getMinutes)
-                .thenComparing(SolarEclipse::getSeconds));
+        solarEclipses.sort(Comparator.comparing(SolarEclipse::getYear, Comparator.reverseOrder())
+                .thenComparing(SolarEclipse::getMonth, Comparator.reverseOrder())
+                .thenComparing(SolarEclipse::getDays, Comparator.reverseOrder())
+                .thenComparing(SolarEclipse::getHours, Comparator.reverseOrder())
+                .thenComparing(SolarEclipse::getMinutes, Comparator.reverseOrder())
+                .thenComparing(SolarEclipse::getSeconds, Comparator.reverseOrder()));
 
         return solarEclipses;
+    }
+
+    public List<LunarEclipse> GetLunarEclipses()
+    {
+        List<LunarEclipse> lunarEclipses = new ArrayList<>();
+
+        ResultSet rs = SqlExecutor.RunQuery("", "SELECT * FROM LunarEclipses;");
+
+        try {
+            while (rs.next())
+            {
+                lunarEclipses.add(SqlSerializer.LunarEclipseFromSql(rs));
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e);
+        }
+
+        lunarEclipses.sort(Comparator.comparing(LunarEclipse::getYear, Comparator.reverseOrder())
+                .thenComparing(LunarEclipse::getMonth, Comparator.reverseOrder())
+                .thenComparing(LunarEclipse::getDays, Comparator.reverseOrder())
+                .thenComparing(LunarEclipse::getHours, Comparator.reverseOrder())
+                .thenComparing(LunarEclipse::getMinutes, Comparator.reverseOrder())
+                .thenComparing(LunarEclipse::getSeconds, Comparator.reverseOrder()));
+
+        return lunarEclipses;
+    }
+
+    public int GetMostRecentSolarSaros(List<SolarEclipse> eclipses)
+    {
+        return eclipses.size() == 0 ? -1 : eclipses.get(0).saros;
+    }
+
+    public int GetMostRecentLunarSaros(List<LunarEclipse> eclipses)
+    {
+        return eclipses.size() == 0 ? -1 : eclipses.get(0).saros;
+    }
+
+    public void PrintSolarEclipses(List<SolarEclipse> eclipses)
+    {
+        for (int i = 0; i < eclipses.size(); i++)
+            System.out.println(eclipses.get(i).time.toString());
+
+        if (eclipses.size() > 0)
+            System.out.println("The most recent Solar Eclipse occured at: " + eclipses.get(0).time + ".");
+    }
+
+    public void PrintLunarEclipses(List<SolarEclipse> eclipses)
+    {
+        for (int i = 0; i < eclipses.size(); i++)
+            System.out.println(eclipses.get(i).time.toString());
+
+        if (eclipses.size() > 0)
+            System.out.println("The most recent Lunar Eclipse occured at: " + eclipses.get(0).time + ".");
     }
 
     static void NextSameEclipse(SolarEclipse pastEclipse) {

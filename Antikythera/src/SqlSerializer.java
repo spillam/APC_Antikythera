@@ -69,7 +69,6 @@ public class SqlSerializer {
             int centralDuration = rs.getInt("CentralD");
             String type = rs.getString("Type");
             String visibility = rs.getString("Visibility");
-            System.out.println("Year: " + year);
             UniversalTime time = new UniversalTime(year, month, day, hours, minutes, seconds);
             return new SolarEclipse(time, saros, magnitude, centralDuration, type, visibility);
         } catch (SQLException e) {
