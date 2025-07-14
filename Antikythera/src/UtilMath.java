@@ -1,5 +1,10 @@
 import java.lang.Object;
 import java.lang.Math;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.util.Scanner;
+
 
 public class UtilMath {
 
@@ -42,9 +47,85 @@ public class UtilMath {
 
     //Normalize an angle between 0 and 360 degrees
     public static double fnrev(double x) {
-        return x - (((int)(x/360))*360);
+        x = x % 360;
+        //if (x < 0) x += 360;
+        return x;
     }
 
+
     //Cube Root = Math.cbrt(double x)
+
+    //compute d (Julian Dates)
+    //Parameters are in Universal Time
+    //The parameters will be user input, which they will enter in whatever timezone they choose
+    public static double d() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("On what date do you want to find the planet's information?");
+
+        System.out.print("Year: ");
+        int year = scanner.nextInt();
+
+        System.out.print("Month (1-12): ");
+        int month = scanner.nextInt();
+
+        System.out.print("Day: ");
+        int day = scanner.nextInt();
+
+        System.out.print("Hour (0-23): ");
+        int hour = scanner.nextInt();
+
+        System.out.print("Minute (0-59): ");
+        int minute = scanner.nextInt();
+
+        System.out.print("Second (0-59): ");
+        int second = scanner.nextInt();
+
+        System.out.println("Select Timezone: (1) Eastern, (2) Central, (3) Mountain, (4) Pacific");
+        int tzChoice = scanner.nextInt();
+
+        ZoneId zoneId;
+        switch (tzChoice) {
+            case 1: zoneId = ZoneId.of("America/New_York"); break;
+            case 2: zoneId = ZoneId.of("America/Chicago"); break;
+            case 3: zoneId = ZoneId.of("America/Denver"); break;
+            case 4: zoneId = ZoneId.of("America/Los_Angeles"); break;
+            default:
+                System.out.println("Invalid timezone selection. Defaulting to GMT.");
+                zoneId = ZoneId.of("GMT");
+        }
+
+        // Convert input time to UTC using your UniversalTime class
+        UniversalTime ut = new UniversalTime(year, month, day, hour, minute, second, zoneId);
+
+        // Get UTC values
+        int y = ut.getYear();
+        int m = ut.getMonth();
+        int d = ut.getDays();
+        int h = ut.getHours();
+        int min = ut.getMinutes();
+        int sec = ut.getSeconds();
+
+        // Julian Day Number calculation (with time of day)
+        if (m <= 2) {
+            y--;
+            m += 12;
+        }
+
+        double a = Math.floor(y / 100.0);
+        double b = 2 - a + Math.floor(a / 4.0);
+
+        double dayFraction = (h + min / 60.0 + sec / 3600.0) / 24.0;
+
+        double jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + b - 1524.5 + dayFraction;
+
+        // Return days since J2000.0 (Jan 1, 2000 at 12:00 TT), which is JD 2451545.0
+        return jd - 2451545.0;
+    }
+
+
+
+
+
 
 }

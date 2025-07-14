@@ -1,17 +1,46 @@
+import java.lang.Math;
 public class Planets
 {
-    public double node, inclination, perihelion, SMaxis, eccentricity, anomaly;
+    public static double node, inclination, perihelion, SMaxis, eccentricity,
+            anomaly, E0, E1, x, y, r, v, xeclip, yeclip, zeclip, longitude, latitude;
 
     //Mercury position
     //note: eccentricity may need some modification
     public static void Mercury(double d) //d = computed Julian day number converter date
         {
-            node = (48.3313 + (3.24587E-5*d))%360;
-            inclination = (7.0047 + (5.00E-8*d))%360;
-            perihelion = (29.1241 + (1.01444E-5*d))%360;
-            SMaxis = 0.387098;
-            eccentricity = (0.205635 + (5.59E-10*d));
-            anomaly = 168.6562 + 4.0923344368*d;
+            node = (48.3313 + (3.24587E-5*d))%360; //Long asc. node N
+            inclination = (7.0047 + (5.00E-8*d))%360; //Inclination i
+            perihelion = (29.1241 + (1.01444E-5*d))%360; //Arg. of perigelion w
+            SMaxis = 0.387098; //Semi-major axis a
+            eccentricity = (0.205635 + (5.59E-10*d)); //Eccentricity e
+            anomaly = 168.6562 + 4.0923344368*d; // Mean anomaly M
+            double M_normalized;
+            M_normalized = UtilMath.fnrev(anomaly);
+            E0 = M_normalized + (180/Math.PI) * eccentricity *
+                    Math.sin(M_normalized) * (1 + eccentricity * Math.cos(M_normalized));
+            E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
+                    Math.sin(E0) - M_normalized) / (1 + eccentricity * Math.cos(M_normalized));
+
+            x = SMaxis * Math.cos(E1 - eccentricity);
+            y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * Math.sin(E1);
+            r = Math.sqrt((x*x) + (y*y));
+            v = Math.atan2(y, x);
+            xeclip = r * Math.cos(node) * Math.cos(v+perihelion) -
+                    Math.sin(node) * Math.sin(v+perihelion) * Math.cos(inclination);
+            yeclip = r * Math.sin(node) * Math.cos(v+perihelion) -
+                    Math.cos(node) * Math.sin(v+perihelion) * Math.cos(inclination);
+            zeclip = r * Math.sin(v+perihelion) * Math.sin(inclination);
+
+            longitude = Math.atan2(yeclip, xeclip);
+            latitude = Math.atan2(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
+            //System.out.println(longitude);
+            //System.out.println(latitude);
+            System.out.println(node);
+            System.out.println(inclination);
+            System.out.println(perihelion);
+            System.out.println(SMaxis);
+            System.out.println(eccentricity);
+            System.out.println(M_normalized);
 
         }
 
