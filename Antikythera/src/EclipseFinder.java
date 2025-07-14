@@ -1,3 +1,4 @@
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -146,4 +147,35 @@ public class EclipseFinder {
     {
 
     }
+
+    public void PredictNextLunarEclipse()
+    {
+
+    }
+
+    public static void PrintAllSolarEclipse() {
+        //Print all Solar Eclipses
+        var url = "jdbc:sqlite:Antikythera/Data/antikythera.db";
+        SqlExecutor.OpenDatabase(url);
+
+        String query = "SELECT * FROM SolarEclipses";
+        ResultSet rs = SqlExecutor.RunQuery(url, query);
+
+        System.out.println("List of past Solar Eclipses:");
+
+        try (var conn = DriverManager.getConnection(url)) {
+
+            while (rs.next()) {
+                SqlSerializer.SolarEclipseFromSql(rs).printAll();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void PrintAllLunarEclipse() {
+
+    }
+
 }
