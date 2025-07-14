@@ -126,4 +126,94 @@ public class Planets
 
     }
 
+    //Sun position --> stationary, but somewhat needed for your point of view
+    public static void Sun(double d)
+    {
+        node = 0; //Long asc. node N
+        inclination = 0; //Inclination i
+        perihelion = (282.9404 + (4.70935E-5*d)); //Arg. of perigelion w --> the angle between acending node and perihelion, becomes equal to the longitude of the perihelion
+        SMaxis = 1.0; //Semi-major axis a
+        eccentricity = (0.016709 + (1.151E-9*d)); //Eccentricity e
+        anomaly = (356.0470 + 0.9856002585*d); // Mean anomaly M
+
+        double oblcl = (23.4393 - (3.563E-7 * d)); //obliquity of ecliptic
+        //supposed on April 19 1990, JD = -3543
+        //w = 282.7735_deg
+        //a = 1.000000
+        //e = 0.016713
+        //M = -3135.9347_deg
+        if (anomaly < 0) {
+            anomaly = 360 - (((anomaly * -1)%360));
+        }
+        else
+        {
+            anomaly = anomaly%360;
+        }
+        anomaly = UtilMath.fnrev(anomaly);
+        longitude = (perihelion + anomaly)%360;//mean longitude of the sun
+
+        E0 = anomaly + (180/Math.PI) * eccentricity *UtilMath.sind(anomaly) * (1+eccentricity*UtilMath.cosd(anomaly));
+        x = Math.cos(E0) - eccentricity;
+        y = Math.sin(E0) * Math.sqrt(1- eccentricity*eccentricity);
+
+        r = Math.sqrt(x*x + y*y);
+        v = Math.atan2(y,x);
+
+        //longitude = v + w; on April 19 1990
+        // lon = 105.9134_deg + 282.7735_deg = 388.6869_deg = 28.6869_deg
+        //      Our results    Astron. Almanac      Difference
+
+        //lon    28.6869_deg      28.6813_deg        +0.0056_deg = 20"
+        //r       1.004323         1.004311          +0.000012
+
+
+    }
+
+    //Moon position
+    //anomaly, E0, E1, x, y, r, v, xeclip, yeclip, zeclip, longitude, latitude;
+    public static void Moon(double d)
+    {
+        node = (125.1228 - (0.0529538083 * d)); //N
+        inclination = 5.1454; //i
+        perihelion = (318.0634 + (0.1643573223 * d)); //w
+        SMaxis = 60.2666; //a
+        eccentricity = 0.054900; //e
+        anomaly = (115.3654 + (13.0649929509 * d)); //M
+
+        if (anomaly < 0) {
+            anomaly = 360 - (((anomaly * -1)%360));
+        }
+        else
+        {
+            anomaly = anomaly%360;
+        }
+        E0 = anomaly + (180/Math.PI) * eccentricity *UtilMath.sind(anomaly)
+                * (1+eccentricity*UtilMath.cosd(anomaly));
+        E1 = E0 - ((E0 - (180/Math.PI)* eccentricity *UtilMath.sind(E0) - anomaly)
+                / (1-eccentricity*UtilMath.cosd(E0)));
+        //E0 == 262.9735 and E1 = 262.9735
+
+        x = SMaxis*(Math.cos(E0) - eccentricity);
+        y = SMaxis * Math.sqrt(1- eccentricity*eccentricity) * UtilMath.sind(E0);
+
+        r = Math.sqrt(x*x + y*y); //60.67134 Earth radii
+        v = Math.atan2(y,x); //259.8605_deg
+
+        xeclip = r * (UtilMath.cosd(node)*UtilMath.cosd(v+perihelion)
+                - UtilMath.sind(node)*UtilMath.sind(v+perihelion)*UtilMath.cosd(inclination));
+        yeclip = r * (UtilMath.sind(node)*UtilMath.cosd(v+perihelion)
+                + UtilMath.cosd(node)*UtilMath.sind(v+perihelion)*UtilMath.cosd(inclination));
+        zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
+
+        //xc = xeclip = +37.65311
+        //yc = yeclip = -47.57180
+        //zc = zeclip =  -0.41687
+
+        longitude = UtilMath.atan2(yeclip, xeclip);
+        latitude = UtilMath.atan2(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+        r = Math.sqrt(xeclip*xeclip + yeclip*yeclip + zeclip*zeclip);
+        //long = 308.3616_deg
+        //lat  =  -0.3937_deg
+        //r    =  60.6713
+    }
 }
