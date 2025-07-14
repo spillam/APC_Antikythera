@@ -17,22 +17,22 @@ public class Planets
             double M_normalized;
             M_normalized = UtilMath.fnrev(anomaly);
             E0 = M_normalized + (180/Math.PI) * eccentricity *
-                    Math.sin(M_normalized) * (1 + eccentricity * Math.cos(M_normalized));
+                    UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
             E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
-                    Math.sin(E0) - M_normalized) / (1 + eccentricity * Math.cos(M_normalized));
+                    UtilMath.sind(E0) - M_normalized) / (1 + eccentricity * UtilMath.cosd(M_normalized));
 
-            x = SMaxis * Math.cos(E1 - eccentricity);
-            y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * Math.sin(E1);
+            x = SMaxis * (UtilMath.cosd(E1) - eccentricity);
+            y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * UtilMath.sind(E1);
             r = Math.sqrt((x*x) + (y*y));
-            v = Math.atan2(y, x);
-            xeclip = r * Math.cos(node) * Math.cos(v+perihelion) -
-                    Math.sin(node) * Math.sin(v+perihelion) * Math.cos(inclination);
-            yeclip = r * Math.sin(node) * Math.cos(v+perihelion) -
-                    Math.cos(node) * Math.sin(v+perihelion) * Math.cos(inclination);
-            zeclip = r * Math.sin(v+perihelion) * Math.sin(inclination);
+            v = UtilMath.atan2d(y, x);
+            xeclip = r * (UtilMath.cosd(node) * UtilMath.cosd(v+perihelion) -
+                    UtilMath.sind(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
+            yeclip = r * (UtilMath.sind(node) * UtilMath.cosd(v+perihelion) +
+                    UtilMath.cosd(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
+            zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
-            longitude = Math.atan2(yeclip, xeclip);
-            latitude = Math.atan2(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
+            longitude = UtilMath.atan2d(yeclip, xeclip);
+            latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip))); // still wrong
             //System.out.println(longitude);
             //System.out.println(latitude);
             System.out.println(node);
@@ -41,6 +41,18 @@ public class Planets
             System.out.println(SMaxis);
             System.out.println(eccentricity);
             System.out.println(M_normalized);
+            System.out.println(E1);
+            System.out.println(r);
+            System.out.println(v);
+            System.out.println(xeclip);
+            System.out.println(yeclip);
+            System.out.println(zeclip);
+            System.out.println(longitude);
+            System.out.println(latitude);
+
+
+            //System.out.println(longitude);
+            //System.out.println(latitude);
 
         }
 
