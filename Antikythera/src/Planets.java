@@ -367,13 +367,13 @@ public class Planets
         longitude = (perihelion + anomaly)%360;//mean longitude of the sun
 
         E0 = anomaly + (180/Math.PI) * eccentricity *UtilMath.sind(anomaly) * (1+eccentricity*UtilMath.cosd(anomaly));
-        x = Math.cos(E0) - eccentricity;
-        y = Math.sin(E0) * Math.sqrt(1- eccentricity*eccentricity);
+        x = UtilMath.cosd(E0) - eccentricity;
+        y = UtilMath.sind(E0) * Math.sqrt(1- eccentricity*eccentricity);
 
         r = Math.sqrt(x*x + y*y);
-        v = Math.atan2(y,x);
+        v = UtilMath.atan2d(y,x);
 
-        longitude = v + perihelion; //on April 19 1990
+        longitude = UtilMath.fnrev(v + perihelion); //on April 19 1990
         // lon = 105.9134_deg + 282.7735_deg = 388.6869_deg = 28.6869_deg
         //      Our results    Astron. Almanac      Difference
 
@@ -402,24 +402,18 @@ public class Planets
         eccentricity = 0.054900; //e
         anomaly = (115.3654 + (13.0649929509 * d)); //M
 
-        if (anomaly < 0) {
-            anomaly = 360 - (((anomaly * -1)%360));
-        }
-        else
-        {
-            anomaly = anomaly%360;
-        }
-        E0 = anomaly + (180/Math.PI) * eccentricity *UtilMath.sind(anomaly)
-                * (1+eccentricity*UtilMath.cosd(anomaly));
-        E1 = E0 - ((E0 - (180/Math.PI)* eccentricity *UtilMath.sind(E0) - anomaly)
+        double M_normalized = UtilMath.fnrev(anomaly);
+        E0 = M_normalized + (180/Math.PI) * eccentricity *UtilMath.sind(M_normalized)
+                * (1+eccentricity*UtilMath.cosd(M_normalized));
+        E1 = E0 - ((E0 - (180/Math.PI)* eccentricity *UtilMath.sind(E0) - M_normalized)
                 / (1-eccentricity*UtilMath.cosd(E0)));
         //E0 == 262.9735 and E1 = 262.9735
 
-        x = SMaxis*(Math.cos(E0) - eccentricity);
+        x = SMaxis*(UtilMath.cosd(E0) - eccentricity);
         y = SMaxis * Math.sqrt(1- eccentricity*eccentricity) * UtilMath.sind(E0);
 
         r = Math.sqrt(x*x + y*y); //60.67134 Earth radii
-        v = Math.atan2(y,x); //259.8605_deg
+        v = UtilMath.atan2d(y,x); //259.8605_deg
 
         xeclip = r * (UtilMath.cosd(node)*UtilMath.cosd(v+perihelion)
                 - UtilMath.sind(node)*UtilMath.sind(v+perihelion)*UtilMath.cosd(inclination));
@@ -431,12 +425,10 @@ public class Planets
         //yc = yeclip = -47.57180
         //zc = zeclip =  -0.41687
 
-        longitude = UtilMath.atan2(yeclip, xeclip);
-        latitude = UtilMath.atan2(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
+        longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
+        latitude = UtilMath.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
         r = Math.sqrt(xeclip*xeclip + yeclip*yeclip + zeclip*zeclip);
-        //long = 308.3616_deg
-        //lat  =  -0.3937_deg
-        //r    =  60.6713
+
 
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);

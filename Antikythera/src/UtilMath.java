@@ -49,9 +49,17 @@ public class UtilMath {
     //Normalize an angle between 0 and 360 degrees
     public static double fnrev(double x) {
         //x = x % 360;
-        while (x < 0) {
-            x += 360;
+        if(x < 0) {
+            while (x < 0) {
+                x += 360;
+            }
         }
+        else if (x > 360) {
+            while (x > 360) {
+                x -= 360;
+            }
+        }
+
         return x;
     }
 
