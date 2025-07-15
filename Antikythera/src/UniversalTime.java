@@ -33,7 +33,7 @@ public class UniversalTime {
     {
         ZonedDateTime zdt = ZonedDateTime.of(in_year, in_month, in_day, in_hour, in_minute, in_second, 0, zId).withZoneSameInstant(ZoneId.of("GMT"));
         year = zdt.getYear();
-        month = zdt.getMonth().getValue() - 1;
+        month = zdt.getMonth().getValue(); //why was this -1?
         day = zdt.getDayOfMonth();
         hour = zdt.getHour();
         minute = zdt.getMinute();

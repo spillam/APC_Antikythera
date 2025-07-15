@@ -41,14 +41,17 @@ public class UtilMath {
         }
     }
 
-    public static double atan2d(double x, double y) {
-        return radeg*(Math.atan(y/x)) - (180 - (Math.PI*x));
+    public static double atan2d(double y, double x) {
+        //return radeg*(Math.atan(y/x)) - (180 - (Math.PI*x));
+        return Math.toDegrees(Math.atan2(y, x));
     }
 
     //Normalize an angle between 0 and 360 degrees
     public static double fnrev(double x) {
-        x = x % 360;
-        //if (x < 0) x += 360;
+        //x = x % 360;
+        while (x < 0) {
+            x += 360;
+        }
         return x;
     }
 
@@ -72,6 +75,7 @@ public class UtilMath {
         System.out.print("Day: ");
         int day = scanner.nextInt();
 
+        /*
         System.out.print("Hour (0-23): ");
         int hour = scanner.nextInt();
 
@@ -80,11 +84,19 @@ public class UtilMath {
 
         System.out.print("Second (0-59): ");
         int second = scanner.nextInt();
+*/
 
+        //these numbers aren't need for Julian Dates computation
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+
+        System.out.println("What timezone are you in?");
         System.out.println("Select Timezone: (1) Eastern, (2) Central, (3) Mountain, (4) Pacific");
         int tzChoice = scanner.nextInt();
 
         ZoneId zoneId;
+
         switch (tzChoice) {
             case 1: zoneId = ZoneId.of("America/New_York"); break;
             case 2: zoneId = ZoneId.of("America/Chicago"); break;
@@ -95,32 +107,24 @@ public class UtilMath {
                 zoneId = ZoneId.of("GMT");
         }
 
-        // Convert input time to UTC using your UniversalTime class
+        //convert the users inputted time (and the time should have been converted) into UTC
         UniversalTime ut = new UniversalTime(year, month, day, hour, minute, second, zoneId);
 
-        // Get UTC values
+        //get UTC values
         int y = ut.getYear();
         int m = ut.getMonth();
-        int d = ut.getDays();
-        int h = ut.getHours();
-        int min = ut.getMinutes();
-        int sec = ut.getSeconds();
+        int day_calc = ut.getDays();
 
-        // Julian Day Number calculation (with time of day)
+        //there is some weird stuff with months 1 and 2
         if (m <= 2) {
             y--;
             m += 12;
         }
 
-        double a = Math.floor(y / 100.0);
-        double b = 2 - a + Math.floor(a / 4.0);
 
-        double dayFraction = (h + min / 60.0 + sec / 3600.0) / 24.0;
+        double d = 367 * y - (7*(y + ((m+9)/12)))/4 + (275*m)/9 + day_calc - 730530;
 
-        double jd = Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + b - 1524.5 + dayFraction;
-
-        // Return days since J2000.0 (Jan 1, 2000 at 12:00 TT), which is JD 2451545.0
-        return jd - 2451545.0;
+        return d;
     }
 
 
