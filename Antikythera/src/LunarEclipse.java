@@ -54,6 +54,6 @@ public class LunarEclipse {
 
     public void printAll()
     {
-        System.out.println("Lunar Eclipse:\nDate: " + getYear() + "/" + getMonth() + "/" + getDays() + " " + getHours() + ":" + getMinutes() + ":" + getSeconds() + ", Saros: " + saros + ", Magnitude: " + magnitude + " Duration: " + centralDuration + "s, Type: " + type + ", Visibility: " + visibility);
+        System.out.println("Saros: " + saros + ", Date (UDT): " + getMonth() + "/" + getDays() + "/" + getYear() + " " + getHours() + ":" + getMinutes() + ":" + getSeconds() + ", Magnitude: " + magnitude + " Central Duration: " + centralDuration + "s, Type: " + type + ", Visibility: " + visibility);
     }
 }
