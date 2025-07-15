@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class EclipseFinder {
 
@@ -94,7 +95,26 @@ public class EclipseFinder {
             System.out.println("The most recent Lunar Eclipse occured at: " + eclipses.get(0).time + ".");
     }
 
-    static void NextSameEclipse(SolarEclipse pastEclipse) {
+    static void NextSameSolarEclipse() throws SQLException {
+
+        var url = "jdbc:sqlite:Antikythera/Data/antikythera.db";
+        SqlExecutor.OpenDatabase(url);
+        Scanner reader = new Scanner(System.in);
+        PrintAllSolarEclipse();
+        SolarEclipse pastEclipse;
+        ResultSet rs = null;
+        int selectSaros;
+
+        do  {
+            System.out.println("Enter the Saros cycle number of the next similar Solar Eclipse to predict for: ");
+            selectSaros = reader.nextInt();
+            reader.nextLine();
+            String query = "SELECT * FROM SolarEclipses WHERE Saros = " + selectSaros;
+            rs = SqlExecutor.RunQuery(url, query);
+
+        } while (!rs.next());
+
+        pastEclipse = SqlSerializer.SolarEclipseFromSql(rs);
 
         UniversalTime solarUT = new UniversalTime(pastEclipse.getYear(), pastEclipse.getMonth(), pastEclipse.getDays(),
                 pastEclipse.getHours(), pastEclipse.getMinutes(), pastEclipse.getSeconds());
@@ -108,21 +128,33 @@ public class EclipseFinder {
 
         solarUT.addSeconds((int) ThreeSarosCycleLeftoverSeconds);
         solarUT.addDays((int) ThreeSarosCycles);
-        /*
-        System.out.println("Year of next same eclipse in same location: " + solarUT.getYear());
-        System.out.println("Month of next same eclipse in same location: " + solarUT.getMonth());
-        System.out.println("Day of next same eclipse in same location: " + solarUT.getDays());
-        System.out.println("Hour of next same eclipse in same location: " + solarUT.getHours());
-        System.out.println("Minute of next same eclipse in same location: " + solarUT.getMinutes());
-        System.out.println("Second of next same eclipse in same location: " + solarUT.getSeconds());
-         */
 
         System.out.println("The next solar eclipse in approximately the same location (likely visible in: " + pastEclipse.getVisibility() + ") will occur on "
                 + solarUT.getMonth() + "/" + solarUT.getDays() + "/" + solarUT.getYear() + " (MM/DD/YEAR) and will likely be " + pastEclipse.getType());
 
+        //147
     }
 
-    static void NextSameEclipse(LunarEclipse pastEclipse) {
+    static void NextSameLunarEclipse() throws SQLException {
+
+        var url = "jdbc:sqlite:Antikythera/Data/antikythera.db";
+        SqlExecutor.OpenDatabase(url);
+        Scanner reader = new Scanner(System.in);
+        PrintAllLunarEclipse();
+        LunarEclipse pastEclipse;
+        ResultSet rs = null;
+        int selectSaros;
+
+        do  {
+            System.out.println("Enter the Saros cycle number of the next similar Lunar Eclipse to predict for: ");
+            selectSaros = reader.nextInt();
+            reader.nextLine();
+            String query = "SELECT * FROM LunarEclipses WHERE Saros = " + selectSaros;
+            rs = SqlExecutor.RunQuery(url, query);
+
+        } while (!rs.next());
+
+        pastEclipse = SqlSerializer.LunarEclipseFromSql(rs);
 
         UniversalTime lunarUT = new UniversalTime(pastEclipse.getYear(), pastEclipse.getMonth(), pastEclipse.getDays(),
                 pastEclipse.getHours(), pastEclipse.getMinutes(), pastEclipse.getSeconds());
@@ -137,10 +169,10 @@ public class EclipseFinder {
         lunarUT.addSeconds((int) ThreeSarosCycleLeftoverSeconds);
         lunarUT.addDays((int) ThreeSarosCycles);
 
-
         System.out.println("The next lunar eclipse in approximately the same location (likely visible in: " + pastEclipse.getVisibility() + ") will occur on "
                 + lunarUT.getMonth() + "/" + lunarUT.getDays() + "/" + lunarUT.getYear() + " (MM/DD/YEAR) and will likely be " + pastEclipse.getType());
 
+        //123
     }
 
     public void PredictNextSolarEclipse()
@@ -174,8 +206,25 @@ public class EclipseFinder {
         }
     }
 
-    public void PrintAllLunarEclipse() {
+    public static void PrintAllLunarEclipse() {
+        //Print all Lunar Eclipses
+        var url = "jdbc:sqlite:Antikythera/Data/antikythera.db";
+        SqlExecutor.OpenDatabase(url);
 
+        String query = "SELECT * FROM LunarEclipses";
+        ResultSet rs = SqlExecutor.RunQuery(url, query);
+
+        System.out.println("List of past Lunar Eclipses:");
+
+        try (var conn = DriverManager.getConnection(url)) {
+
+            while (rs.next()) {
+                SqlSerializer.LunarEclipseFromSql(rs).printAll();
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
