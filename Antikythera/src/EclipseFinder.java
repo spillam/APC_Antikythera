@@ -1,5 +1,8 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,6 +13,7 @@ public class EclipseFinder {
     static double ThreeSarosCycles = SarosCycle * 3.0;
     static double SarosCycleLeftoverSeconds = 27743.04;
     static double ThreeSarosCycleLeftoverSeconds = SarosCycleLeftoverSeconds * 3;
+    static int SecondsInDay = 86400;
 
     public List<SolarEclipse> GetSolarEclipses()
     {
@@ -142,8 +146,55 @@ public class EclipseFinder {
 
     }
 
-    public void PredictNextSolarEclipse()
+    public SolarEclipse PredictNextSolarEclipse()
     {
+        List<SolarEclipse> eclipses = GetSolarEclipses();
 
+        SolarEclipse farthestEclipse = null;
+
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT"));
+        ZonedDateTime tempTime;
+        long dayDifference = 0;
+
+        for (int i = 0; i < eclipses.size(); i++)
+        {
+            tempTime = eclipses.get(i).time.ToZonedDate(ZoneId.of("GMT"));
+            dayDifference = Math.abs(ChronoUnit.DAYS.between(now, tempTime));
+
+            if (dayDifference > SarosCycle)
+                break;
+            else
+                farthestEclipse = eclipses.get(i);
+        }
+
+        farthestEclipse.time.addSeconds((int)(SarosCycle * SecondsInDay));
+
+        return farthestEclipse;
+    }
+
+    public LunarEclipse PredictNextLunarEclipse()
+    {
+        List<LunarEclipse> eclipses = GetLunarEclipses();
+
+        LunarEclipse farthestEclipse = null;
+
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT"));
+        ZonedDateTime tempTime;
+        long dayDifference = 0;
+
+        for (int i = 0; i < eclipses.size(); i++)
+        {
+            tempTime = eclipses.get(i).time.ToZonedDate(ZoneId.of("GMT"));
+            dayDifference = Math.abs(ChronoUnit.DAYS.between(now, tempTime));
+
+            if (dayDifference > SarosCycle)
+                break;
+            else
+                farthestEclipse = eclipses.get(i);
+        }
+
+        farthestEclipse.time.addSeconds((int)(SarosCycle * SecondsInDay));
+
+        return farthestEclipse;
     }
 }
