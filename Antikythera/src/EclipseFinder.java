@@ -231,11 +231,6 @@ public class EclipseFinder {
         return farthestEclipse;
     }
 
-    public void PredictNextLunarEclipse()
-    {
-
-    }
-
     public static void PrintAllSolarEclipse() {
         //Print all Solar Eclipses
         var url = "jdbc:sqlite:Antikythera/Data/antikythera.db";
