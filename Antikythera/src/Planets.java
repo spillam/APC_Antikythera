@@ -14,8 +14,10 @@ public class Planets
             SMaxis = 0.387098; //Semi-major axis a
             eccentricity = (0.205635 + (5.59E-10*d)); //Eccentricity e
             anomaly = 168.6562 + 4.0923344368*d; // Mean anomaly M
+
             double M_normalized;
             M_normalized = UtilMath.fnrev(anomaly);
+
             E0 = M_normalized + (180/Math.PI) * eccentricity *
                     UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
             E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
@@ -23,8 +25,10 @@ public class Planets
 
             x = SMaxis * (UtilMath.cosd(E1) - eccentricity);
             y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * UtilMath.sind(E1);
+
             r = Math.sqrt((x*x) + (y*y));
             v = UtilMath.atan2d(y, x);
+
             xeclip = r * (UtilMath.cosd(node) * UtilMath.cosd(v+perihelion) -
                     UtilMath.sind(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
             yeclip = r * (UtilMath.sind(node) * UtilMath.cosd(v+perihelion) +
@@ -32,9 +36,7 @@ public class Planets
             zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
             longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
-            latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip))); // still wrong
-            //System.out.println(longitude);
-            //System.out.println(latitude);
+            latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
 
             System.out.println("Longitude of Ascension: " + node);
             System.out.println("Inclination: " + inclination);
@@ -50,11 +52,6 @@ public class Planets
             System.out.println("Ecliptic Coordinate Z:" +zeclip);
             System.out.println("Longitude: " + longitude);
             System.out.println("Latitude: " + latitude);
-
-
-            //System.out.println(longitude);
-            //System.out.println(latitude);
-
         }
 
     //Venus position
@@ -66,8 +63,10 @@ public class Planets
         SMaxis = 0.72333;
         eccentricity = (0.006773 - (1.302E-9*d));
         anomaly = (48.0052 + (1.6021302244 * d));
+
         double M_normalized;
         M_normalized = UtilMath.fnrev(anomaly);
+
         E0 = M_normalized + (180/Math.PI) * eccentricity *
                 UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
         E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
@@ -75,8 +74,10 @@ public class Planets
 
         x = SMaxis * (UtilMath.cosd(E1) - eccentricity);
         y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * UtilMath.sind(E1);
+
         r = Math.sqrt((x*x) + (y*y));
         v = UtilMath.atan2d(y, x);
+
         xeclip = r * (UtilMath.cosd(node) * UtilMath.cosd(v+perihelion) -
                 UtilMath.sind(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
         yeclip = r * (UtilMath.sind(node) * UtilMath.cosd(v+perihelion) +
@@ -84,9 +85,7 @@ public class Planets
         zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
         longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
-        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip))); // still wrong
-        //System.out.println(longitude);
-        //System.out.println(latitude);
+        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
 
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);
@@ -113,8 +112,10 @@ public class Planets
         SMaxis = 1.523688;
         eccentricity = (0.093405+ (2.516E-9* d));
         anomaly = (18.6021 + (0.5240207766 * d ));
+
         double M_normalized;
         M_normalized = UtilMath.fnrev(anomaly);
+
         E0 = M_normalized + (180/Math.PI) * eccentricity *
                 UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
         E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
@@ -160,8 +161,10 @@ public class Planets
         SMaxis = 5.20256;
         eccentricity = (0.048498 + (4.469E-9 * d));
         anomaly = (19.8950 +(0.0830853001 * d));
+
         double M_normalized;
         M_normalized = UtilMath.fnrev(anomaly);
+
         E0 = M_normalized + (180/Math.PI) * eccentricity *
                 UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
         E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
@@ -169,8 +172,10 @@ public class Planets
 
         x = SMaxis * (UtilMath.cosd(E1) - eccentricity);
         y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * UtilMath.sind(E1);
+
         r = Math.sqrt((x*x) + (y*y));
         v = UtilMath.atan2d(y, x);
+
         xeclip = r * (UtilMath.cosd(node) * UtilMath.cosd(v+perihelion) -
                 UtilMath.sind(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
         yeclip = r * (UtilMath.sind(node) * UtilMath.cosd(v+perihelion) +
@@ -178,9 +183,7 @@ public class Planets
         zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
         longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
-        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip))); // still wrong
-        //System.out.println(longitude);
-        //System.out.println(latitude);
+        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
 
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);
@@ -207,8 +210,10 @@ public class Planets
         SMaxis = 9.55475;
         eccentricity = 0.055546- (9.499E-9 * d);
         anomaly = (316.9670 + (0.0334442282 * d));
+
         double M_normalized;
         M_normalized = UtilMath.fnrev(anomaly);
+
         E0 = M_normalized + (180/Math.PI) * eccentricity *
                 UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
         E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
@@ -216,8 +221,10 @@ public class Planets
 
         x = SMaxis * (UtilMath.cosd(E1) - eccentricity);
         y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * UtilMath.sind(E1);
+
         r = Math.sqrt((x*x) + (y*y));
         v = UtilMath.atan2d(y, x);
+
         xeclip = r * (UtilMath.cosd(node) * UtilMath.cosd(v+perihelion) -
                 UtilMath.sind(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
         yeclip = r * (UtilMath.sind(node) * UtilMath.cosd(v+perihelion) +
@@ -225,9 +232,7 @@ public class Planets
         zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
         longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
-        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip))); // still wrong
-        //System.out.println(longitude);
-        //System.out.println(latitude);
+        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
 
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);
@@ -254,8 +259,10 @@ public class Planets
         SMaxis = 19.18171 - (1.55E-8 * d);
         eccentricity = (0.047318 + (7.45E-9 * d));
         anomaly = (142.5905 + (0.011725806  * d));
+
         double M_normalized;
         M_normalized = UtilMath.fnrev(anomaly);
+
         E0 = M_normalized + (180/Math.PI) * eccentricity *
                 UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
         E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
@@ -263,8 +270,10 @@ public class Planets
 
         x = SMaxis * (UtilMath.cosd(E1) - eccentricity);
         y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * UtilMath.sind(E1);
+
         r = Math.sqrt((x*x) + (y*y));
         v = UtilMath.atan2d(y, x);
+
         xeclip = r * (UtilMath.cosd(node) * UtilMath.cosd(v+perihelion) -
                 UtilMath.sind(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
         yeclip = r * (UtilMath.sind(node) * UtilMath.cosd(v+perihelion) +
@@ -272,9 +281,7 @@ public class Planets
         zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
         longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
-        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip))); // still wrong
-        //System.out.println(longitude);
-        //System.out.println(latitude);
+        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
 
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);
@@ -301,8 +308,10 @@ public class Planets
         SMaxis = 30.05826 + (3.313E-8 * d);
         eccentricity = (0.008606 + (2.15E-9 * d));
         anomaly = (260.2471 + (0.005995147 * d));
+
         double M_normalized;
         M_normalized = UtilMath.fnrev(anomaly);
+
         E0 = M_normalized + (180/Math.PI) * eccentricity *
                 UtilMath.sind(M_normalized) * (1 + eccentricity * UtilMath.cosd(M_normalized));
         E1 = E0 - (E0 - (180/Math.PI) * eccentricity *
@@ -310,8 +319,10 @@ public class Planets
 
         x = SMaxis * (UtilMath.cosd(E1) - eccentricity);
         y = SMaxis * Math.sqrt(1 - (eccentricity * eccentricity)) * UtilMath.sind(E1);
+
         r = Math.sqrt((x*x) + (y*y));
         v = UtilMath.atan2d(y, x);
+
         xeclip = r * (UtilMath.cosd(node) * UtilMath.cosd(v+perihelion) -
                 UtilMath.sind(node) * UtilMath.sind(v+perihelion) * UtilMath.cosd(inclination));
         yeclip = r * (UtilMath.sind(node) * UtilMath.cosd(v+perihelion) +
@@ -319,9 +330,7 @@ public class Planets
         zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
         longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
-        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip))); // still wrong
-        //System.out.println(longitude);
-        //System.out.println(latitude);
+        latitude = UtilMath.atan2d(zeclip, Math.sqrt((xeclip * xeclip) + (yeclip * yeclip)));
 
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);
@@ -351,11 +360,7 @@ public class Planets
         anomaly = (356.0470 + 0.9856002585*d); // Mean anomaly M
 
         double oblcl = (23.4393 - (3.563E-7 * d)); //obliquity of ecliptic
-        //supposed on April 19 1990, JD = -3543
-        //w = 282.7735_deg
-        //a = 1.000000
-        //e = 0.016713
-        //M = -3135.9347_deg
+
         if (anomaly < 0) {
             anomaly = 360 - (((anomaly * -1)%360));
         }
@@ -364,7 +369,7 @@ public class Planets
             anomaly = anomaly%360;
         }
         anomaly = UtilMath.fnrev(anomaly);
-        longitude = (perihelion + anomaly)%360;//mean longitude of the sun
+        longitude = (perihelion + anomaly)%360; //mean longitude of the sun
 
         E0 = anomaly + (180/Math.PI) * eccentricity *UtilMath.sind(anomaly) * (1+eccentricity*UtilMath.cosd(anomaly));
         x = UtilMath.cosd(E0) - eccentricity;
@@ -373,12 +378,8 @@ public class Planets
         r = Math.sqrt(x*x + y*y);
         v = UtilMath.atan2d(y,x);
 
-        longitude = UtilMath.fnrev(v + perihelion); //on April 19 1990
-        // lon = 105.9134_deg + 282.7735_deg = 388.6869_deg = 28.6869_deg
-        //      Our results    Astron. Almanac      Difference
+        longitude = UtilMath.fnrev(v + perihelion);
 
-        //lon    28.6869_deg      28.6813_deg        +0.0056_deg = 20"
-        //r       1.004323         1.004311          +0.000012
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);
         System.out.println("Argument of Perihelion: " + perihelion);
@@ -407,13 +408,12 @@ public class Planets
                 * (1+eccentricity*UtilMath.cosd(M_normalized));
         E1 = E0 - ((E0 - (180/Math.PI)* eccentricity *UtilMath.sind(E0) - M_normalized)
                 / (1-eccentricity*UtilMath.cosd(E0)));
-        //E0 == 262.9735 and E1 = 262.9735
 
         x = SMaxis*(UtilMath.cosd(E0) - eccentricity);
         y = SMaxis * Math.sqrt(1- eccentricity*eccentricity) * UtilMath.sind(E0);
 
-        r = Math.sqrt(x*x + y*y); //60.67134 Earth radii
-        v = UtilMath.atan2d(y,x); //259.8605_deg
+        r = Math.sqrt(x*x + y*y);
+        v = UtilMath.atan2d(y,x);
 
         xeclip = r * (UtilMath.cosd(node)*UtilMath.cosd(v+perihelion)
                 - UtilMath.sind(node)*UtilMath.sind(v+perihelion)*UtilMath.cosd(inclination));
@@ -421,14 +421,9 @@ public class Planets
                 + UtilMath.cosd(node)*UtilMath.sind(v+perihelion)*UtilMath.cosd(inclination));
         zeclip = r * UtilMath.sind(v+perihelion) * UtilMath.sind(inclination);
 
-        //xc = xeclip = +37.65311
-        //yc = yeclip = -47.57180
-        //zc = zeclip =  -0.41687
-
         longitude = UtilMath.fnrev(UtilMath.atan2d(yeclip, xeclip));
         latitude = UtilMath.atan2d(zeclip, Math.sqrt(xeclip*xeclip + yeclip*yeclip));
         r = Math.sqrt(xeclip*xeclip + yeclip*yeclip + zeclip*zeclip);
-
 
         System.out.println("Longitude of Ascension: " + node);
         System.out.println("Inclination: " + inclination);
