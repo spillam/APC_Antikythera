@@ -26,6 +26,29 @@ public class Main {
         ut.addDays(31);
         System.out.println("Current time GMT is: " + ut);
 
+        double d = UtilMath.d();
+        //double d = -3543;
+        System.out.println(d);
+        System.out.println("Mercury");
+        Planets.Mercury(d);
+        System.out.println("Venus");
+        Planets.Venus(d);
+        System.out.println("Mars");
+        Planets.Mars(d);
+        System.out.println("Jupiter");
+        Planets.Jupiter(d);
+        System.out.println("Saturn");
+        Planets.Saturn(d);
+        System.out.println("Uranus");
+        Planets.Uranus(d);
+        System.out.println("Neptune");
+        Planets.Neptune(d);
+        System.out.println("Moon");
+        Planets.Moon(d);
+        System.out.println("Sun");
+        Planets.Sun(d);
+
+
         // TO-DO: User Interface
         /*System.out.println("Welcome to The Antikythera Replication Project");
 
