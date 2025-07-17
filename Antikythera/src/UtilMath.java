@@ -37,18 +37,16 @@ public class UtilMath {
             return (Math.atan(y/x)) - (Math.PI*x);
         }
         else {
-            return 0; //this does not work, x has to be less than 0, but we need to return something if it isn't
+            return 0;
         }
     }
 
     public static double atan2d(double y, double x) {
-        //return radeg*(Math.atan(y/x)) - (180 - (Math.PI*x));
         return Math.toDegrees(Math.atan2(y, x));
     }
 
     //Normalize an angle between 0 and 360 degrees
     public static double fnrev(double x) {
-        //x = x % 360;
         if(x < 0) {
             while (x < 0) {
                 x += 360;
@@ -83,18 +81,6 @@ public class UtilMath {
         System.out.print("Day: ");
         int day = scanner.nextInt();
 
-        /*
-        System.out.print("Hour (0-23): ");
-        int hour = scanner.nextInt();
-
-        System.out.print("Minute (0-59): ");
-        int minute = scanner.nextInt();
-
-        System.out.print("Second (0-59): ");
-        int second = scanner.nextInt();
-*/
-
-        //these numbers aren't need for Julian Dates computation
         int hour = 0;
         int minute = 0;
         int second = 0;
